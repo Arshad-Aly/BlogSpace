@@ -67,6 +67,10 @@ MIDDLEWARE = [
     # "django_browser_reload.middleware.BrowserReloadMiddleware",
 
     "corsheaders.middleware.CorsMiddleware",
+
+
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'blogspace.urls'
@@ -143,6 +147,8 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
 
 
 MEDIA_ROOT = BASE_DIR / 'static/images'  # <---------- For Images ----------->
