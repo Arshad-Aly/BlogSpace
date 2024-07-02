@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+
+
+
+<div class="flex justify-center my-10">
+    <div class="relative flex flex-col justify-between mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+        <form action="" method="POST">
+            <div class="p-6">
+                {% csrf_token %}
+                <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                    <p>Are you sure you want to Delete "{{obj}}" ?</p>
+                </h5>
+            </div>
+            <div class="p-6 pt-0">
+                <a href="{{request.META.HTTP_REFERER}}" class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">Go Back</a>
+                <input
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                type="submit" value="Confirm" />
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+

@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+
+
+
+
+<div class="mx-4 sm:mx-8 md:mx-16 lg:mx-[120px] my-7 md:pl-8 lg:pl-auto">
+    <form action="" method="POST" class="flex flex-col justify-center w-full max-w-md mx-auto" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div class="flex flex-col justify-center space-y-4">
+            {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}" class="form__group font-sans block mb-2">{{field.label}}</label>
+                <div class="room_name w-full">
+                    {{field}}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <input class="hover:cursor-pointer w-full sm:w-28 rounded-md p-2 mt-5 bg-blue-500 text-white" type="submit" value="Submit">
+    </form>
+</div>
+
+
+
+
+{% endblock content %}

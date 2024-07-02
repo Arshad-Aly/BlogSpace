@@ -1,0 +1,52 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+    
+    <div class="container">
+        
+        {% include "base/tags_component.html" %}
+        
+            
+        <div>
+            <div class="flex w-full max-w-[26rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none m-auto">
+                <div class="relative flex items-center gap-4 pt-0 pb-8 mx-0 mt-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
+                    <img
+                    src="{{user.avatar.url}}"
+                    alt="user-profile"
+                    class="relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center" />
+                    <div class="flex w-full flex-col gap-0.5">
+                        <div class="flex items-center justify-between">
+                            <h5 class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                            {{user.username.title}}
+                            </h5>
+                            {% if request.user == user %}
+                            <div>
+                                <a href="{% url "update-user" %}">Edit</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <p class="block font-sans text-base antialiased font-light leading-relaxed text-blue-gray-900">
+                            {{user.bio}}
+                        </p>
+                    </div>
+                </div> 
+                <div class="p-0 mb-6">
+                        <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                            {% if user.description %}
+                            {{user.description}}
+                            {% else %}
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry
+                            {% endif %}
+                        </p>
+                </div>
+      
+            </div>
+
+            {% include "base/feed_component.html" %}
+        </div>
+
+        
+    </div>
+
+{% endblock content %}

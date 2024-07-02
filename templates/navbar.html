@@ -1,0 +1,107 @@
+
+
+<nav class="bg-gray-800">
+  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <div class="relative flex h-16 items-center justify-between">
+      <!-- Mobile menu button -->
+      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <button type="button" class="mobile-menu-button inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+          <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Logo -->
+      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="flex flex-shrink-0 items-center">
+          <a href="{% url "home" %}" class="text-xl sm:text-3xl text-white font-mono">Blog-Space</a>
+        </div>
+
+        <!-- Desktop menu -->
+        <div class="hidden sm:ml-6 sm:block">
+          <div class="flex space-x-4">
+            <a href="{% url "home" %}" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Home</a>
+            {% if request.user.is_authenticated %}
+              <a href="{% url "profile" request.user.id %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Profile</a>
+              <a href="{% url "logout" %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-red-600">Logout</a>
+            {% else %}
+              <a href="{% url "login" %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Search bar -->
+      <div class="hidden sm:block">
+        <form action="{% url 'home' %}" method="GET" class="flex items-center">
+          <input class="rounded-md bg-gray-700 text-gray-50 focus:border-teal-800 outline-none shadow-none focus:outline-none focus:shadow-none focus:ring-0 px-3 py-1" type="text" name="q" placeholder="Search" style="width: 200px;">
+          <button type="submit" class="ml-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md px-3 py-1">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="sm:hidden hidden" id="mobile-menu">
+    <div class="space-y-1 px-2 pb-3 pt-2">
+      <a href="{% url "home" %}" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Home</a>
+      {% if request.user.is_authenticated %}
+        <a href="{% url "profile" request.user.id %}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Profile</a>
+        <a href="{% url "logout" %}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-red-600">Logout</a>
+      {% else %}
+        <a href="{% url "login" %}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
+      {% endif %}
+      <form action="{% url 'home' %}" method="GET" class="mt-3">
+        <input class="w-full rounded-md bg-gray-700 text-gray-50 focus:border-teal-800 outline-none shadow-none focus:outline-none focus:shadow-none focus:ring-0 px-3 py-2" type="text" name="q" placeholder="Search">
+        <button type="submit" class="mt-2 w-full bg-gray-600 hover:bg-gray-500 text-white rounded-md px-3 py-2">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuButton = document.querySelector('.mobile-menu-button');
+  const mobileMenu = document.querySelector('#mobile-menu');
+  
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', function() {
+      console.log('Button clicked');
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      
+      if (mobileMenu) {
+        mobileMenu.classList.toggle('hidden');
+      } else {
+        console.error('Mobile menu not found when trying to toggle');
+      }
+      
+      // Toggle between menu icons
+      const openIcon = this.querySelector('svg:not(.hidden)');
+      const closeIcon = this.querySelector('svg.hidden');
+      
+
+      if (openIcon && closeIcon) {
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      } else {
+        console.error('Menu icons not found');
+      }
+    });
+  } else {
+    console.error('Mobile menu button or menu not found');
+  }
+});
+
+
+</script>
+  
+  

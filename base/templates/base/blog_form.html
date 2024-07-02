@@ -1,0 +1,46 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+
+<div class="mx-4 sm:mx-8 md:mx-16 lg:mx-[120px] my-4 sm:my-7 lg:pl-auto">
+    <form action="" method="POST" class="flex flex-col justify-center max-w-2xl mx-auto">
+        {% csrf_token %}
+        <div class="space-y-6">
+            <div>
+                <label class="block font-sans mb-2" for="tag">Tag</label>
+                <input required type="text" value="{{blog.tag.name}}" name="tag" list="tag-list" class="w-full sm:w-64 px-3 py-2 border border-gray-300 rounded-md">
+                <datalist id="tag-list">
+                    <select name="" id="blog-tag">
+                        {% for tag in tags %}
+                        <option value="{{tag.name}}">{{tag.name}}</option>
+                        {% endfor %}
+                    </select>
+                </datalist>
+            </div>
+            <div>
+                <label for="name" class="block font-sans mb-2">Name</label>
+                <div class="room_name">
+                    {{form.name}}
+                </div>
+            </div>
+            <div>
+                <label for="description" class="block font-sans mb-2">Description</label>
+                <div class="room_description">
+                    {{form.description}}
+                </div>
+            </div>
+            <div>
+                <label for="content" class="block font-sans mb-2">Content</label>
+                <div>
+                    {{ form.content }}
+                </div>
+            </div>
+        </div>
+        <div class="mt-6">
+            <input class="w-full sm:w-auto px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer" type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

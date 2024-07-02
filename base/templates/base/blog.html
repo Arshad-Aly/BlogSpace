@@ -1,0 +1,90 @@
+{% extends "main.html" %}
+
+
+{% block content %}
+
+<style>
+    .container{
+        display:grid;
+        grid-template-columns: 3fr 1fr;
+    }
+</style>
+
+<div class="container">
+
+    <div class="m-10">
+        <div class="flex felx-row justify-between mt-2 mb-1">
+            <div class="flex flex-row">
+                <h1 class="mb-2 font-serif text-3xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">{{blog.name}}</h1>
+                <li
+                    class="flex items-center font-sans text-sm antialiased font-normal leading-normal transition-colors duration-300 cursor-pointer text-blue-gray-900 hover:text-light-blue-500">
+                    <span
+                        class="mx-2 font-sans text-sm antialiased font-normal leading-normal pointer-events-none select-none text-blue-gray-500">/</span>
+                    <form action="{% url 'home' %}" method="GET">
+                        <input class="border-none ml-1 cursor-pointer" type="submit" name="q" value="{{tag}}" >
+                    </form>
+                </li>
+            </div>
+            <h1>{{blog.created.date}} ago</h1>
+        </div>
+        <a href="{% url "profile" blog.host.id %}" class="font-sans text-blue-700 font-semibold">{{blog.host.username}}</a>
+        
+
+        <h3 class="mt-2 mb-3 font-sans text-xl">{{blog.description}}</h3>
+
+        <h1 class="m-auto text-2xl font-semibold font-serif">Content</h1>
+
+        <p class="mt-2 mb-3 font-serif text-center text-lg" style="white-space: pre-wrap;">{{blog.content}}</p>
+
+        <hr>
+        <div class="mt-4">
+            <h3 class="text-2xl font-semibold font-serif m-3">Conversations</h3>
+            {% for message in blog_messages %}
+            <div class="m-4 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-110 p-5 mx-5">
+                <div class="flex justify-between">
+                    <a href="{% url "profile" message.user.id %}" class="font-sans text-blue-700 font-semibold">{{message.user}}</a>
+                    <div class="flex flex-row">
+                        <h3 class="mr-2">{{message.created.date}}</h3>
+                        {% if request.user == message.user %}
+                        <a href="{% url "delete-message" message.id %}" class="hover:text-gray-400 ease-in duration-300">Delete</a>
+                        {% endif %}
+                    </div>
+
+                </div>
+                    <p class="text-lg mt-4 mb-4">{{message.body}}</p>
+            </div>
+            {% endfor %}
+        </div>    
+
+        {% if request.user.is_authenticated %}
+        <div class="mt-7 mb-7">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input class="rounded-md m-auto w-full border-gray-500 outline-none shadow-none focus:outline-none focus:shadow-none focus:ring-0 active:outline-none active:border-black" type="text" name="body" placeholder="Write your message..">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+
+
+    <div class="m-10  hidden md:block">
+        <h1 class="text-2xl font-semibold font-serif m-3">Participants</h1>
+
+        <div class="flex flex-col text-gray-700 bg-white shadow-none w-78 bg-clip-border font-sans">
+            <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-semibold text-base text-blue-gray-700">        
+            {% for user in participants %}
+                <a type="button" href="{% url "profile" user.id  %}?q={{user.id}}"
+                    class="font-sans text-blue-700 font-semibold flex items-center w-full p-3 leading-tight">
+                    {{user.username}}
+                </a>
+            {% endfor %}
+            </nav>
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock content %}
